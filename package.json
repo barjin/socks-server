@@ -1,5 +1,5 @@
 {
-  "name": "socks-server",
+  "name": "socks-server-lib",
   "description": "SOCKS4/SOCKS5 proxy server",
   "keywords": [
     "socks4",
@@ -9,10 +9,13 @@
     "server"
   ],
   "version": "0.0.2",
-  "homepage": "https://github.com/chbrown/socks-server",
-  "repository": "git://github.com/chbrown/socks-server.git",
+  "homepage": "https://github.com/barjin/socks-server",
+  "repository": "git://github.com/barjin/socks-server.git",
   "bugs": "https://github.com/chbrown/socks-server/issues",
   "author": "Christopher Brown <io@henrian.com> (http://henrian.com)",
+  "contributors": [
+    "Jindřich Bär <me@jindrich.bar> (https://jindrich.bar)"
+  ],
   "license": "MIT",
   "bin": {
     "socks-server": "server.js"

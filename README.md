@@ -1,4 +1,4 @@
-# socks-server
+# socks-server-lib
 
 [SOCKS](https://en.wikipedia.org/wiki/SOCKS) (Socket Secure) proxy server.
 
@@ -9,3 +9,5 @@
 ## License
 
 Copyright 2015 Christopher Brown. [MIT Licensed](http://chbrown.github.io/licenses/MIT/#2015).
+
+TypeScript / library port by Jindřich Bär, 2025.
