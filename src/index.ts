@@ -65,17 +65,21 @@ function readAddress(type: number, buffer: Buffer) {
 interface RunSocksServerOptions {
   port?: number;
   host?: string;
+  onData?: (data: Buffer, socket: Socket) => void;
 }
 
 export function runSocksServer(
-  options: RunSocksServerOptions,
+  options?: RunSocksServerOptions,
 ): Promise<net.Server> {
-  const { port = 1080, host = "0.0.0.0" } = options;
+  const { port = 1080, host = "0.0.0.0", onData: onDataCallback } = options || {};
 
   const server = net
     .createServer(function (socket) {
       socket
         .once("data", function (greeting) {
+          if (onDataCallback) {
+            onDataCallback(greeting, socket);
+          }
           const socks_version = greeting[0];
           if (socks_version === 4) {
             const address = {

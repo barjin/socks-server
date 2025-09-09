@@ -9,7 +9,7 @@
     "server"
   ],
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/barjin/socks-server",
   "repository": "git://github.com/barjin/socks-server.git",
   "bugs": "https://github.com/chbrown/socks-server/issues",
