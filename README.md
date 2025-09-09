@@ -2,10 +2,9 @@
 
 [SOCKS](https://en.wikipedia.org/wiki/SOCKS) (Socket Secure) proxy server.
 
-* Supports SOCKS4
-* Supports SOCKS5
-* Authentication is not yet implemented
-
+- Supports SOCKS4
+- Supports SOCKS5
+- Authentication is not yet implemented
 
 ## License
 
