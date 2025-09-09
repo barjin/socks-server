@@ -16,5 +16,8 @@
   "license": "MIT",
   "bin": {
     "socks-server": "server.js"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.1"
   }
 }
