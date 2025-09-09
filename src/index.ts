@@ -3,7 +3,8 @@
  *
  * Exports `runSocksServer` function to start the server from your code (doesn't start the server automatically).
  */
-import net, { Socket, type AddressInfo } from "net";
+import net from "net";
+import type { Socket, AddressInfo } from "net";
 
 function formatIPv4(buffer: Buffer) {
   // buffer.length == 4
@@ -121,14 +122,6 @@ export function runSocksServer(
         .on("end", function () {
           socket.end(); // is this unnecessary?
         });
-    })
-    .on("listening", function (this: Socket) {
-      const address = this.address() as AddressInfo;
-      console.log(
-        "server listening on tcp://%s:%d",
-        address.address,
-        address.port,
-      );
     })
     .on("error", function (err) {
       console.error("server error: %j", err);

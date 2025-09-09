@@ -1,6 +1,6 @@
 {
   "name": "socks-server-lib",
-  "description": "SOCKS4/SOCKS5 proxy server",
+  "description": "SOCKS4/SOCKS5 proxy server (now as a library!)",
   "keywords": [
     "socks4",
     "socks5",
@@ -19,14 +19,18 @@
   ],
   "license": "MIT",
   "bin": {
-    "socks-server": "server.js"
+    "socks-server-lib": "dist/server.js"
   },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "npm run clean && tsc",
+    "clean": "rimraf dist",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@types/node": "^24.3.1",
+    "rimraf": "^6.0.1",
     "typescript": "^5.9.2"
   }
 }

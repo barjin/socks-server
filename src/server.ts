@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { runSocksServer } from "./index.js";
 
 const port = process.env["PORT"] ? parseInt(process.env["PORT"], 10) : 1080;
@@ -5,6 +6,8 @@ const host = process.env["HOST"] || "0.0.0.0";
 
 runSocksServer({ port, host })
   .then((server) => {
+    console.log(`SOCKS server running at tcp://${host}:${port}`);
+
     process.on("SIGINT", () => {
       console.log("SIGINT signal received: closing server...");
       server.close(() => {
