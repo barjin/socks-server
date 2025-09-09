@@ -35,9 +35,7 @@ You can also run the server from the command line.
 npx socks-server-lib
 ```
 
-This will start the server on port 1080. You can specify a different port with the `-p` option:
-
-```bash
+This will start the server on port 1080. You can specify a different port / host with the `PORT` and `HOST` environment variables.
 
 ## License
 
