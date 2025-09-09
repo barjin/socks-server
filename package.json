@@ -8,6 +8,7 @@
     "proxy",
     "server"
   ],
+  "type": "module",
   "version": "0.0.2",
   "homepage": "https://github.com/barjin/socks-server",
   "repository": "git://github.com/barjin/socks-server.git",
@@ -20,7 +21,12 @@
   "bin": {
     "socks-server": "server.js"
   },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
   "devDependencies": {
-    "@types/node": "^24.3.1"
+    "@types/node": "^24.3.1",
+    "typescript": "^5.9.2"
   }
 }

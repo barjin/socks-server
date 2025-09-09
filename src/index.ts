@@ -3,7 +3,7 @@
  *
  * Exports `runSocksServer` function to start the server from your code (doesn't start the server automatically).
  */
-import net from "net";
+import net, { Socket, type AddressInfo } from "net";
 
 function formatIPv4(buffer: Buffer) {
   // buffer.length == 4
@@ -30,7 +30,7 @@ returned from socket.address(), e.g.:
 The given `type` should be either 1, 3, or 4, and the `buffer` should be
 formatted according to the SOCKS5 specification.
 */
-function readAddress(type, buffer) {
+function readAddress(type: number, buffer: Buffer) {
   if (type == 1) {
     // IPv4 address
     return {
@@ -39,8 +39,11 @@ function readAddress(type, buffer) {
       port: buffer.readUInt16BE(4),
     };
   } else if (type == 3) {
+    if (buffer.length < 2) {
+      throw new Error("Invalid address buffer length: " + buffer.length);
+    }
     // Domain name
-    const length = buffer[0];
+    const length = buffer[0]!;
     return {
       family: "domain",
       address: buffer.slice(1, length + 1).toString(),
@@ -79,7 +82,7 @@ export function runSocksServer(
               address: formatIPv4(greeting.subarray(4)),
             };
             // var user = greeting.slice(8, -1).toString();
-            net.connect(address.port, address.address, function () {
+            net.connect(address.port, address.address, function (this: Socket) {
               // the socks response must be made after the remote connection has been
               // established
               socket.pipe(this).pipe(socket);
@@ -90,15 +93,25 @@ export function runSocksServer(
             //             ...supported_authentication_method_ids]
             socket.write(Buffer.from([5, 0]));
             socket.once("data", function (connection) {
-              const address_type = connection[3];
-              const address = readAddress(address_type, connection.subarray(4));
+              if (connection.length < 4) {
+                throw new Error(
+                  "Invalid connection length: " + connection.length,
+                );
+              }
 
-              net.connect(address.port, address.address, function () {
-                socket.pipe(this).pipe(socket);
-                const response = Buffer.from(connection);
-                response[1] = 0;
-                socket.write(response);
-              });
+              const addressType = connection[3]!;
+              const address = readAddress(addressType, connection.subarray(4));
+
+              net.connect(
+                address.port,
+                address.address,
+                function (this: Socket) {
+                  socket.pipe(this).pipe(socket);
+                  const response = Buffer.from(connection);
+                  response[1] = 0;
+                  socket.write(response);
+                },
+              );
             });
           }
         })
@@ -109,8 +122,8 @@ export function runSocksServer(
           socket.end(); // is this unnecessary?
         });
     })
-    .on("listening", function () {
-      const address = this.address();
+    .on("listening", function (this: Socket) {
+      const address = this.address() as AddressInfo;
       console.log(
         "server listening on tcp://%s:%d",
         address.address,
